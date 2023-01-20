@@ -1,0 +1,204 @@
+; THESE SHOULD CRASH AS THESE ARE INVALID!
+; LD (HL), (HL)   ; THIS IS A HALT!
+LD (HL), IXH    ; This is invalid due to IX/IY taking over (HL)
+LD (HL), IYH    ; This is invalid due to IX/IY taking over (HL)
+LD (HL), IXL    ; This is invalid due to IX/IY taking over (HL)
+LD (HL), IYL    ; This is invalid due to IX/IY taking over (HL)
+; LD IXH, (IX+1)  ; This is ambiguous to LD H, (IX+1)
+; LD IXL, (IX+1)  ; This is ambiguous to LD L, (IX+1)
+; LD IYH, (IY+1)  ; This is ambiguous to LD H, (IY+1)
+; LD IYL, (IY+1)  ; This is ambiguous to LD L, (IY+1)
+LD IXH, IYH     ; This is ambiguous to existing instructions using H/L
+LD IXL, IYL     ; This is ambiguous to existing instructions using H/L
+LD IXH, IYL     ; This is ambiguous to existing instructions using H/L
+LD IXL, IYH     ; This is ambiguous to existing instructions using H/L
+LD IYH, IXH     ; This is ambiguous to existing instructions using H/L
+LD IYL, IXL     ; This is ambiguous to existing instructions using H/L
+LD IYH, IXL     ; This is ambiguous to existing instructions using H/L
+LD IYL, IXH     ; This is ambiguous to existing instructions using H/L
+
+; Test LD instructions in defined order
+LD BC, 0xDEAD
+LD (BC), A
+LD B, 0xAD
+LD A, (BC)
+LD C, 0xBE
+LD DE, 0xBEEF
+LD (DE), A
+LD D, 0xEF
+LD A, (DE)
+LD E, 0xBA
+LD HL, 0xBEAD
+LD (0xDAB), HL
+LD H, 0xAF
+LD HL, (0xBAD)
+LD L, 0xEB
+LD SP, 0xADDE
+LD (0x1414), A
+LD (HL), 0x72
+LD A, (0x2200)
+LD A, 0x37
+LD B, B
+LD B, C
+LD B, D
+LD B, E
+LD B, H
+LD B, L
+LD B, (HL)
+LD B, A
+LD C, B
+LD C, C
+LD C, D
+LD C, E
+LD C, H
+LD C, L
+LD C, (HL)
+LD C, A
+LD D, B
+LD D, C
+LD D, D
+LD D, E
+LD D, H
+LD D, L
+LD D, (HL)
+LD D, A
+LD E, B
+LD E, C
+LD E, D
+LD E, E
+LD E, H
+LD E, L
+LD E, (HL)
+LD E, A
+LD H, B
+LD H, C
+LD H, D
+LD H, E
+LD H, H
+LD H, L
+LD H, (HL)
+LD H, A
+LD L, B
+LD L, C
+LD L, D
+LD L, E
+LD L, H
+LD L, L
+LD L, (HL)
+LD L, A
+LD (HL), B
+LD (HL), C
+LD (HL), D
+LD (HL), E
+LD (HL), H
+LD (HL), L
+LD (HL), A
+LD A, B
+LD A, C
+LD A, D
+LD A, E
+LD A, H
+LD A, L
+LD A, (HL)
+LD A, A
+LD SP, HL
+LD (0x5757), BC
+LD I, A
+LD BC, (0x7575)
+LD R, A
+LD (0x2233), DE
+LD A, I
+LD DE, (0x1199)
+LD A, R
+LD (0x6655), SP
+LD SP, (0x2489)
+LD IX, 0x8787
+LD (0x2874), IX
+LD IXH, 0x12
+LD IX, (0x3589)
+LD IXL, 0x24
+LD (IX+1), 0x19
+LD B, IXH
+LD B, IXL
+LD B, (IX+2)
+LD C, IXH
+LD C, IXL
+LD C, (IX+3)
+LD D, IXH
+LD D, IXL
+LD D, (IX+4)
+LD E, IXH
+LD E, IXL
+LD E, (IX+5)
+LD IXH, B
+LD IXH, C
+LD IXH, D
+LD IXH, E
+LD IXH, IXH
+LD IXH, IXL
+LD H, (IX+6)
+LD IXH, A
+LD IXL, B
+LD IXL, C
+LD IXL, D
+LD IXL, E
+LD IXL, IXH
+LD IXL, IXL
+LD L, (IX+7)
+LD IXL, A
+LD (IX+8), B
+LD (IX+9), C
+LD (IX+10), D
+LD (IX+11), E
+LD (IX+12), H
+LD (IX+13), L
+LD (IX+14), A
+LD A, IXH
+LD A, IXL
+LD A, (IX+15)
+LD SP, IX
+LD IY, 0x8787
+LD (0x2874), IY
+LD IYH, 0x12
+LD IY, (0x3589)
+LD IYL, 0x24
+LD (IY+1), 0x19
+LD B, IYH
+LD B, IYL
+LD B, (IY+2)
+LD C, IYH
+LD C, IYL
+LD C, (IY+3)
+LD D, IYH
+LD D, IYL
+LD D, (IY+4)
+LD E, IYH
+LD E, IYL
+LD E, (IY+5)
+LD IYH, B
+LD IYH, C
+LD IYH, D
+LD IYH, E
+LD IYH, IYH
+LD IYH, IYL
+LD H, (IY+6)
+LD IYH, A
+LD IYL, B
+LD IYL, C
+LD IYL, D
+LD IYL, E
+LD IYL, IYH
+LD IYL, IYL
+LD L, (IY+7)
+LD IYL, A
+LD (IY+8), B
+LD (IY+9), C
+LD (IY+10), D
+LD (IY+11), E
+LD (IY+12), H
+LD (IY+13), L
+LD (IY+14), A
+LD A, IYH
+LD A, IYL
+LD A, (IY+15)
+LD SP, IY
